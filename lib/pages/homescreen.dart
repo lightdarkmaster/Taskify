@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
-import 'package:todoapp/add_task.dart';
+import 'package:todoapp/pages/add_task.dart';
 import 'package:todoapp/const/const.dart';
-import 'package:todoapp/task_details.dart';
+import 'package:todoapp/pages/task_details.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -100,7 +100,7 @@ class _HomescreenState extends State<Homescreen> {
         elevation: 10,
         actions: [
           IconButton(
-            icon: const Icon(Icons.delete, color: Colors.black),
+            icon: const Icon(Icons.delete_forever, color: Colors.red),
             tooltip: 'Delete All Tasks',
             onPressed: () async {
               final confirm = await showDialog<bool>(
