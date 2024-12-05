@@ -95,7 +95,7 @@ class _NoteScreenState extends State<NoteScreen> {
       appBar: AppBar(
         title: const Text(
           'Notes',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontFamily: 'Monserat'),
         ),
         backgroundColor: headerColor,
         elevation: 10,
@@ -170,9 +170,9 @@ class _NoteScreenState extends State<NoteScreen> {
                       title: Text(
                         note['title'],
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
+                            fontWeight: FontWeight.bold, fontSize: 18, fontFamily: 'Monserat'),
                       ),
-                      subtitle: Text(note['description']),
+                      subtitle: Text(note['description'], style: const TextStyle(fontFamily: 'Monserat')),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
