@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todoapp/pages/about_page.dart';
 import 'package:todoapp/pages/display_notes.dart';
 import 'package:todoapp/pages/homescreen.dart';
+import 'package:todoapp/pages/user_manual.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -67,6 +68,26 @@ class CustomDrawer extends StatelessWidget {
           ),
           // About ListTile with a red background and an image icon
           Container(
+            color: Colors.purple.shade100, // Light red background
+            child: ListTile(
+              leading: Image.asset(
+                'assets/images/usermanual.png', // Replace with your image asset path for About
+                width: 30.0,
+                height: 30.0,
+              ),
+              title: const Text('User Manual'),
+              onTap: () {
+                Navigator.pop(context); // Close the drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const UserManual()), // Navigate to AboutPage
+                );
+              },
+            ),
+          ),
+      Container(
             color: Colors.red.shade100, // Light red background
             child: ListTile(
               leading: Image.asset(
