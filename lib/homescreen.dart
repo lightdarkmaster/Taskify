@@ -1,10 +1,9 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
 import 'package:todoapp/add_task.dart';
 import 'package:todoapp/const/const.dart';
+import 'package:todoapp/task_details.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -56,14 +55,13 @@ class _HomescreenState extends State<Homescreen> {
   }
 
   Future<void> _deleteAllTasks() async {
-  final db = await _database;
-  await db.delete('tasks'); // Delete all rows from the 'tasks' table
-  _fetchTasks(); // Refresh the task list
-  ScaffoldMessenger.of(context).showSnackBar(
-    const SnackBar(content: Text('All tasks deleted successfully!')),
-  );
-}
-
+    final db = await _database;
+    await db.delete('tasks'); // Delete all rows from the 'tasks' table
+    _fetchTasks(); // Refresh the task list
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('All tasks deleted successfully!')),
+    );
+  }
 
   void _editTask(Map<String, dynamic> task) async {
     await Navigator.push(
@@ -147,10 +145,15 @@ class _HomescreenState extends State<Homescreen> {
                 final color = differentColors[
                     index % differentColors.length]; // Cycle through colors
                 return Card(
+                  elevation: 5,
                   margin:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   color: color, // Set background color of the Card
                   child: ListTile(
+                    leading: const CircleAvatar(
+                      radius: 25,
+                      backgroundImage: AssetImage('assets/images/task.png'), // Replace with your asset path
+                    ),
                     title: Text(
                       task['title'],
                       style: const TextStyle(
@@ -172,6 +175,14 @@ class _HomescreenState extends State<Homescreen> {
                         ),
                       ],
                     ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TaskDetailsPage(task: task),
+                        ),
+                      );
+                    },
                   ),
                 );
               },
