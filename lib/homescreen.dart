@@ -3,6 +3,7 @@ import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
 import 'package:todoapp/add_task.dart';
 import 'package:todoapp/const/const.dart';
+import 'package:todoapp/task_details.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -14,17 +15,6 @@ class Homescreen extends StatefulWidget {
 class _HomescreenState extends State<Homescreen> {
   List<Map<String, dynamic>> _tasks = [];
   late Future<Database> _database;
-
-  // Define a list of colors for ListTile backgrounds
-  final List<Color> _tileColors = [
-    Colors.lightBlue.shade100,
-    Colors.lightGreen.shade100,
-    Colors.amber.shade100,
-    Colors.pink.shade100,
-    Colors.purple.shade100,
-    Colors.orange.shade100,
-    Colors.cyan.shade100,
-  ];
 
   @override
   void initState() {
@@ -64,6 +54,15 @@ class _HomescreenState extends State<Homescreen> {
     _fetchTasks(); // Refresh the task list
   }
 
+  Future<void> _deleteAllTasks() async {
+    final db = await _database;
+    await db.delete('tasks'); // Delete all rows from the 'tasks' table
+    _fetchTasks(); // Refresh the task list
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('All tasks deleted successfully!')),
+    );
+  }
+
   void _editTask(Map<String, dynamic> task) async {
     await Navigator.push(
       context,
@@ -82,7 +81,8 @@ class _HomescreenState extends State<Homescreen> {
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const AddTask(taskId: null, title: null, description: null),
+        builder: (context) =>
+            const AddTask(taskId: null, title: null, description: null),
       ),
     );
     _fetchTasks(); // Refresh the task list after returning
@@ -97,16 +97,39 @@ class _HomescreenState extends State<Homescreen> {
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         backgroundColor: headerColor,
-        actions: <Widget>[
+        elevation: 10,
+        actions: [
           IconButton(
-            icon: const Icon(Icons.add),
-            tooltip: 'Add Item',
-            onPressed: () {
-              _navigateToAddPage(context);
+            icon: const Icon(Icons.delete, color: Colors.black),
+            tooltip: 'Delete All Tasks',
+            onPressed: () async {
+              final confirm = await showDialog<bool>(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('Confirm Delete'),
+                    content: const Text(
+                        'Are you sure you want to delete all tasks?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        child: const Text('Delete'),
+                      ),
+                    ],
+                  );
+                },
+              );
+
+              if (confirm == true) {
+                await _deleteAllTasks();
+              }
             },
           ),
         ],
-        elevation: 10,
       ),
       body: _tasks.isEmpty
           ? const Center(
@@ -119,14 +142,22 @@ class _HomescreenState extends State<Homescreen> {
               itemCount: _tasks.length,
               itemBuilder: (context, index) {
                 final task = _tasks[index];
-                final color = _tileColors[index % _tileColors.length]; // Cycle through colors
+                final color = differentColors[
+                    index % differentColors.length]; // Cycle through colors
                 return Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  elevation: 5,
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   color: color, // Set background color of the Card
                   child: ListTile(
+                    leading: const CircleAvatar(
+                      radius: 25,
+                      backgroundImage: AssetImage('assets/images/task.png'), // Replace with your asset path
+                    ),
                     title: Text(
                       task['title'],
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     subtitle: Text(task['description']),
                     trailing: Row(
@@ -144,10 +175,24 @@ class _HomescreenState extends State<Homescreen> {
                         ),
                       ],
                     ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TaskDetailsPage(task: task),
+                        ),
+                      );
+                    },
                   ),
                 );
               },
             ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _navigateToAddPage(context),
+        backgroundColor: headerColor,
+        tooltip: 'Add a new task',
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }
