@@ -33,7 +33,7 @@ class CustomDrawer extends StatelessWidget {
                 width: 30.0,
                 height: 30.0,
               ),
-              title: const Text('Task'),
+              title: const Text('Task', style: TextStyle(fontFamily: 'Monserat'),),
               onTap: () {
                 Navigator.pop(context); // Close the drawer
                 Navigator.push(
@@ -54,7 +54,7 @@ class CustomDrawer extends StatelessWidget {
                 width: 30.0,
                 height: 30.0,
               ),
-              title: const Text('Notes'),
+              title: const Text('Notes', style: TextStyle(fontFamily: 'Monserat'),),
               onTap: () {
                 Navigator.pop(context); // Close the drawer
                 Navigator.push(
@@ -75,7 +75,7 @@ class CustomDrawer extends StatelessWidget {
                 width: 30.0,
                 height: 30.0,
               ),
-              title: const Text('User Manual'),
+              title: const Text('User Manual,', style: TextStyle(fontFamily: 'Monserat'),),
               onTap: () {
                 Navigator.pop(context); // Close the drawer
                 Navigator.push(
@@ -87,7 +87,7 @@ class CustomDrawer extends StatelessWidget {
               },
             ),
           ),
-      Container(
+          Container(
             color: Colors.red.shade100, // Light red background
             child: ListTile(
               leading: Image.asset(
@@ -95,7 +95,7 @@ class CustomDrawer extends StatelessWidget {
                 width: 30.0,
                 height: 30.0,
               ),
-              title: const Text('About'),
+              title: const Text('About', style: TextStyle(fontFamily: 'Monserat'),),
               onTap: () {
                 Navigator.pop(context); // Close the drawer
                 Navigator.push(

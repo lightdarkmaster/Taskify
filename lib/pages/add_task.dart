@@ -95,7 +95,7 @@ class _AddTaskState extends State<AddTask> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.taskId != null ? 'Edit Task' : 'Add Task'),
+        title: Text(widget.taskId != null ? 'Edit Task' : 'Add Task', style: const TextStyle(fontFamily: 'Monserat'),),
         backgroundColor: headerColor,
         actions: [
           IconButton(
@@ -112,7 +112,7 @@ class _AddTaskState extends State<AddTask> {
           children: [
             const Text(
               'Task Title',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: 'Monserat'),
             ),
             const SizedBox(height: 8),
             TextField(
@@ -125,7 +125,7 @@ class _AddTaskState extends State<AddTask> {
             const SizedBox(height: 16),
             const Text(
               'Description',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: 'Monserat'),
             ),
             const SizedBox(height: 8),
             TextField(
@@ -143,7 +143,7 @@ class _AddTaskState extends State<AddTask> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: headerColor,
                 ),
-                child: Text(widget.taskId != null ? 'Update' : 'Save'),
+                child: Text(widget.taskId != null ? 'Update' : 'Save', style: const TextStyle(fontFamily: 'Monserat', fontWeight: FontWeight.bold),),
               ),
             ),
           ],

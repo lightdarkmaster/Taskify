@@ -95,7 +95,7 @@ class _HomescreenState extends State<Homescreen> {
       appBar: AppBar(
         title: const Text(
           'Todo',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontFamily: 'Monserat'),
         ),
         backgroundColor: headerColor,
         elevation: 10,
@@ -108,9 +108,9 @@ class _HomescreenState extends State<Homescreen> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: const Text('Confirm Delete'),
+                      title: const Text('Confirm Delete', style: TextStyle(fontFamily: 'Monserat'),),
                       content: const Text(
-                          'Are you sure you want to delete all tasks?'),
+                          'Are you sure you want to delete all tasks?', style: TextStyle(fontFamily: 'Monserat'),),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(context, false),
@@ -144,7 +144,7 @@ class _HomescreenState extends State<Homescreen> {
             ? const Center(
                 child: Text(
                   'No tasks available. Add some tasks!',
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16, fontFamily: 'Monserat'),
                 ),
               )
             : ListView.builder(
@@ -165,9 +165,9 @@ class _HomescreenState extends State<Homescreen> {
                       title: Text(
                         task['title'],
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
+                            fontWeight: FontWeight.bold, fontSize: 18, fontFamily: 'Monserat'),
                       ),
-                      subtitle: Text(task['description']),
+                      subtitle: Text(task['description'], style: const TextStyle(fontFamily: 'Monserat'),),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [

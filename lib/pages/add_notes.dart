@@ -79,7 +79,7 @@ class _AddNotesState extends State<AddNotes> {
         whereArgs: [widget.noteId],
       );
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Note updated successfully!')),
+        const SnackBar(content: Text('Note updated successfully!', style: TextStyle(fontFamily: 'Momserat'),)),
       );
     }
 
@@ -95,7 +95,7 @@ class _AddNotesState extends State<AddNotes> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.noteId != null ? 'Edit Note' : 'Add Note'),
+        title: Text(widget.noteId != null ? 'Edit Note' : 'Add Note', style: const TextStyle(fontFamily: 'Monserat'),),
         backgroundColor: headerColor,
         actions: [
           IconButton(
@@ -112,7 +112,7 @@ class _AddNotesState extends State<AddNotes> {
           children: [
             const Text(
               'Note Title',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: 'Monserat'),
             ),
             const SizedBox(height: 8),
             TextField(
@@ -125,7 +125,7 @@ class _AddNotesState extends State<AddNotes> {
             const SizedBox(height: 16),
             const Text(
               'Description',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, fontFamily: 'Monserat'),
             ),
             const SizedBox(height: 8),
             TextField(
@@ -143,7 +143,7 @@ class _AddNotesState extends State<AddNotes> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: headerColor,
                 ),
-                child: Text(widget.noteId != null ? 'Update' : 'Save'),
+                child: Text(widget.noteId != null ? 'Update' : 'Save', style: const TextStyle(fontFamily: 'Monserat', fontWeight: FontWeight.bold),),
               ),
             ),
           ],

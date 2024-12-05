@@ -14,7 +14,7 @@ class _AboutPageState extends State<AboutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('About Us'),
+        title: const Text('About', style: TextStyle(fontFamily: 'Monserat'),),
         backgroundColor: headerColor,
       ),
       drawer: const CustomDrawer(),
@@ -46,6 +46,7 @@ class _AboutPageState extends State<AboutPage> {
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Monserat'
                       ),
                     ),
                   ),
@@ -55,7 +56,8 @@ class _AboutPageState extends State<AboutPage> {
                       'This app allows you to manage and organize your tasks efficiently. You can add, edit, and delete tasks as needed. The interface is simple and intuitive, designed to help you focus on what matters most.',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.black54,
+                        color: Colors.black,
+                        fontFamily: 'Monserat'
                       ),
                     ),
                   ),
@@ -75,7 +77,7 @@ class _AboutPageState extends State<AboutPage> {
                   ClipRRect(
                     borderRadius: const BorderRadius.vertical(top: Radius.circular(15.0)),
                     child: Image.asset(
-                      'assets/images/iconPic.jpg', // Ensure this path is correct
+                      'assets/images/mision.png', // Ensure this path is correct
                       width: double.infinity,
                       height: 150,
                       fit: BoxFit.contain,
@@ -88,6 +90,7 @@ class _AboutPageState extends State<AboutPage> {
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Monserat'
                       ),
                     ),
                   ),
@@ -98,7 +101,8 @@ class _AboutPageState extends State<AboutPage> {
                         'My mission is to help users achieve their goals by providing an efficient task management tool. I believe in simplicity and productivity, ensuring that our app serves as a reliable assistant for daily planning.',
                         style: TextStyle(
                           fontSize: 16,
-                          color: Colors.black54,
+                          color: Colors.black,
+                          fontFamily: 'Monserat'
                         ),
                       ),
                     ),
