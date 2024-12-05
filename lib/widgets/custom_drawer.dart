@@ -17,49 +17,71 @@ class CustomDrawer extends StatelessWidget {
             height: 120.0, // Adjust the height as needed
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/header.gif'), // Replace with your image asset path
+                image: AssetImage(
+                    'assets/images/header.gif'), // Replace with your image asset path
                 fit: BoxFit.cover, // Ensures the image covers the entire area
               ),
             ),
           ),
-          // Task ListTile with a blue background
+          // Task ListTile with a blue background and an image icon
           Container(
             color: Colors.blue.shade100, // Light blue background
             child: ListTile(
+              leading: Image.asset(
+                'assets/images/taskicon.png', // Replace with your image asset path for Task
+                width: 30.0,
+                height: 30.0,
+              ),
               title: const Text('Task'),
               onTap: () {
                 Navigator.pop(context); // Close the drawer
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Homescreen()), // Navigate to TaskPage
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const Homescreen()), // Navigate to TaskPage
                 );
               },
             ),
           ),
-          // Notes ListTile with a green background
+          // Notes ListTile with a green background and an image icon
           Container(
             color: Colors.green.shade100, // Light green background
             child: ListTile(
+              leading: Image.asset(
+                'assets/images/notesicon.png', // Replace with your image asset path for Notes
+                width: 30.0,
+                height: 30.0,
+              ),
               title: const Text('Notes'),
               onTap: () {
                 Navigator.pop(context); // Close the drawer
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const NoteScreen()), // Navigate to SettingsPage
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const NoteScreen()), // Navigate to Notes Page
                 );
               },
             ),
           ),
-          // About ListTile with a red background
+          // About ListTile with a red background and an image icon
           Container(
             color: Colors.red.shade100, // Light red background
             child: ListTile(
+              leading: Image.asset(
+                'assets/images/abouticon.png', // Replace with your image asset path for About
+                width: 30.0,
+                height: 30.0,
+              ),
               title: const Text('About'),
               onTap: () {
                 Navigator.pop(context); // Close the drawer
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const AboutPage()), // Navigate to AboutPage
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          const AboutPage()), // Navigate to AboutPage
                 );
               },
             ),
