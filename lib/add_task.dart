@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
+import 'package:path/path.dart' as path;
 import 'package:todoapp/const/const.dart';
-import 'package:todoapp/homescreen.dart';
 
 class AddTask extends StatefulWidget {
   final int? taskId; // Optional parameter for task ID
@@ -32,7 +31,7 @@ class _AddTaskState extends State<AddTask> {
   Future<Database> _initializeDatabase() async {
     final dbPath = await getDatabasesPath();
     return openDatabase(
-      join(dbPath, 'tasks.db'),
+      path.join(dbPath, 'tasks.db'),
       onCreate: (db, version) {
         return db.execute(
           'CREATE TABLE tasks(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT)',
@@ -42,52 +41,55 @@ class _AddTaskState extends State<AddTask> {
     );
   }
 
-Future<void> _saveTask() async {
-  final title = _titleController.text.trim();
-  final description = _descriptionController.text.trim();
+  Future<void> _saveTask() async {
+    final title = _titleController.text.trim();
+    final description = _descriptionController.text.trim();
 
-  if (title.isEmpty || description.isEmpty) {
-    ScaffoldMessenger.of(context as BuildContext).showSnackBar(
-      const SnackBar(content: Text('Please fill out all fields.')),
-    );
-    return;
+    if (title.isEmpty || description.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill out all fields.')),
+      );
+      return;
+    }
+
+    final db = await _initializeDatabase();
+
+    if (widget.taskId == null) {
+      // Save new task
+      await db.insert(
+        'tasks',
+        {
+          'title': title,
+          'description': description,
+        },
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Task saved successfully!')),
+      );
+    } else {
+      // Update existing task
+      await db.update(
+        'tasks',
+        {
+          'title': title,
+          'description': description,
+        },
+        where: 'id = ?',
+        whereArgs: [widget.taskId],
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Task updated successfully!')),
+      );
+    }
+
+    Navigator.pop(context); // Navigate back to Homescreen
   }
 
-  final db = await _initializeDatabase();
-
-  if (widget.taskId == null) {
-    // Save new task
-    await db.insert(
-      'tasks',
-      {
-        'title': title,
-        'description': description,
-      },
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-    ScaffoldMessenger.of(context as BuildContext).showSnackBar(
-      const SnackBar(content: Text('Task saved successfully!')),
-    );
-  } else {
-    // Update existing task
-    await db.update(
-      'tasks',
-      {
-        'title': title,
-        'description': description,
-      },
-      where: 'id = ?',
-      whereArgs: [widget.taskId],
-    );
-    ScaffoldMessenger.of(context as BuildContext).showSnackBar(
-      const SnackBar(content: Text('Task updated successfully!')),
-    );
+  // Cancel button action
+  void _cancel() {
+    Navigator.pop(context); // Navigate back to Homescreen without saving
   }
-
-  Navigator.pop(context as BuildContext); // Navigate back to Homescreen
-}
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +97,13 @@ Future<void> _saveTask() async {
       appBar: AppBar(
         title: Text(widget.taskId != null ? 'Edit Task' : 'Add Task'),
         backgroundColor: headerColor,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.cancel),
+            tooltip: 'Cancel',
+            onPressed: _cancel, // Cancel action
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
