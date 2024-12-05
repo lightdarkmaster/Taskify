@@ -104,22 +104,25 @@ class _HomescreenState extends State<Homescreen> {
             icon: const Icon(Icons.delete_forever, color: Colors.red),
             tooltip: 'Delete All Tasks',
             onPressed: () async {
-              final confirm = await showDialog<bool>(context: context, builder: (context) {
-                return AlertDialog(
-                  title: const Text('Confirm Delete'),
-                  content: const Text('Are you sure you want to delete all tasks?'),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, false),
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, true),
-                      child: const Text('Delete'),
-                    ),
-                  ],
-                );
-              });
+              final confirm = await showDialog<bool>(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text('Confirm Delete'),
+                      content: const Text(
+                          'Are you sure you want to delete all tasks?'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, false),
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.pop(context, true),
+                          child: const Text('Delete'),
+                        ),
+                      ],
+                    );
+                  });
 
               if (confirm == true) {
                 await _deleteAllTasks();
@@ -151,7 +154,8 @@ class _HomescreenState extends State<Homescreen> {
                   final color = differentColors[index % differentColors.length];
                   return Card(
                     elevation: 5,
-                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     color: color,
                     child: ListTile(
                       leading: const CircleAvatar(
@@ -160,7 +164,8 @@ class _HomescreenState extends State<Homescreen> {
                       ),
                       title: Text(
                         task['title'],
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                       subtitle: Text(task['description']),
                       trailing: Row(
@@ -172,8 +177,33 @@ class _HomescreenState extends State<Homescreen> {
                           ),
                           IconButton(
                             icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () {
-                              _deleteTask(task['id']);
+                            onPressed: () async {
+                              final confirm = await showDialog<bool>(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: const Text('Confirm Delete'),
+                                      content: const Text(
+                                          'Are you sure you want to delete this task?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, false),
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, true),
+                                          child: const Text('Delete'),
+                                        ),
+                                      ],
+                                    );
+                                  });
+
+                              if (confirm == true) {
+                                await _deleteTask(
+                                    task['id']); // Proceed with deletion
+                              }
                             },
                           ),
                         ],
