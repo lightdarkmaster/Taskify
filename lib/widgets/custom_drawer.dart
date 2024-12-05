@@ -21,22 +21,6 @@ class CustomDrawer extends StatelessWidget {
                 fit: BoxFit.cover, // Ensures the image covers the entire area
               ),
             ),
-            child: const Padding(
-              padding:  EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Center(
-                   child: Text(
-                  'TODO - APP', // The text you want to display
-                  style: TextStyle(
-                    color: Colors.black, // Text color
-                    fontSize: 40.0, // Font size
-                    fontWeight: FontWeight.bold, // Bold text
-                  ),
-                ),
-                )
-              ),
-            ),
           ),
           // Task ListTile with a blue background
           Container(

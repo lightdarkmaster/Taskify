@@ -83,7 +83,7 @@ class _HomescreenState extends State<Homescreen> {
       context,
       MaterialPageRoute(
         builder: (context) =>
-            const AddTask(taskId: null, title: null, description: null,),
+            const AddTask(taskId: null, title: null, description: null),
       ),
     );
     _fetchTasks(); // Refresh the task list after returning
@@ -129,59 +129,68 @@ class _HomescreenState extends State<Homescreen> {
         ],
       ),
       drawer: const CustomDrawer(), // Use the custom drawer widget here
-      body: _tasks.isEmpty
-          ? const Center(
-              child: Text(
-                'No tasks available. Add some tasks!',
-                style: TextStyle(fontSize: 16),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue.shade200, Colors.purple.shade200],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: _tasks.isEmpty
+            ? const Center(
+                child: Text(
+                  'No tasks available. Add some tasks!',
+                  style: TextStyle(fontSize: 16),
+                ),
+              )
+            : ListView.builder(
+                itemCount: _tasks.length,
+                itemBuilder: (context, index) {
+                  final task = _tasks[index];
+                  final color = differentColors[index % differentColors.length];
+                  return Card(
+                    elevation: 5,
+                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    color: color,
+                    child: ListTile(
+                      leading: const CircleAvatar(
+                        radius: 25,
+                        backgroundImage: AssetImage('assets/images/task.png'),
+                      ),
+                      title: Text(
+                        task['title'],
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      subtitle: Text(task['description']),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.edit, color: Colors.blue),
+                            onPressed: () => _editTask(task),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              _deleteTask(task['id']);
+                            },
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TaskDetailsPage(task: task),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
               ),
-            )
-          : ListView.builder(
-              itemCount: _tasks.length,
-              itemBuilder: (context, index) {
-                final task = _tasks[index];
-                final color = differentColors[index % differentColors.length];
-                return Card(
-                  elevation: 5,
-                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  color: color,
-                  child: ListTile(
-                    leading: const CircleAvatar(
-                      radius: 25,
-                      backgroundImage: AssetImage('assets/images/task.png'),
-                    ),
-                    title: Text(
-                      task['title'],
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-                    ),
-                    subtitle: Text(task['description']),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit, color: Colors.blue),
-                          onPressed: () => _editTask(task),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.red),
-                          onPressed: () {
-                            _deleteTask(task['id']);
-                          },
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TaskDetailsPage(task: task),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _navigateToAddPage(context),
         backgroundColor: headerColor,
