@@ -12,7 +12,7 @@ class CustomDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          // Drawer Header with adjustable height
+          // Drawer Header with adjustable height and text
           Container(
             height: 120.0, // Adjust the height as needed
             decoration: const BoxDecoration(
@@ -21,7 +21,22 @@ class CustomDrawer extends StatelessWidget {
                 fit: BoxFit.cover, // Ensures the image covers the entire area
               ),
             ),
-            child: null, // Removing the child so only the image is shown
+            child: const Padding(
+              padding:  EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.bottomLeft,
+                child: Center(
+                   child: Text(
+                  'TODO - APP', // The text you want to display
+                  style: TextStyle(
+                    color: Colors.black, // Text color
+                    fontSize: 40.0, // Font size
+                    fontWeight: FontWeight.bold, // Bold text
+                  ),
+                ),
+                )
+              ),
+            ),
           ),
           // Task ListTile with a blue background
           Container(
