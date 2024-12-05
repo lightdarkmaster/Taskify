@@ -23,35 +23,47 @@ class CustomDrawer extends StatelessWidget {
             ),
             child: null, // Removing the child so only the image is shown
           ),
-          ListTile(
-            title: const Text('Task'),
-            onTap: () {
-              Navigator.pop(context); // Close the drawer
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Homescreen()), // Navigate to TaskPage
-              );
-            },
+          // Task ListTile with a blue background
+          Container(
+            color: Colors.blue.shade100, // Light blue background
+            child: ListTile(
+              title: const Text('Task'),
+              onTap: () {
+                Navigator.pop(context); // Close the drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Homescreen()), // Navigate to TaskPage
+                );
+              },
+            ),
           ),
-          ListTile(
-            title: const Text('Notes'),
-            onTap: () {
-              Navigator.pop(context); // Close the drawer
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const NoteScreen()), // Navigate to SettingsPage
-              );
-            },
+          // Notes ListTile with a green background
+          Container(
+            color: Colors.green.shade100, // Light green background
+            child: ListTile(
+              title: const Text('Notes'),
+              onTap: () {
+                Navigator.pop(context); // Close the drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NoteScreen()), // Navigate to SettingsPage
+                );
+              },
+            ),
           ),
-          ListTile(
-            title: const Text('About'),
-            onTap: () {
-              Navigator.pop(context); // Close the drawer
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AboutPage()), // Navigate to AboutPage
-              );
-            },
+          // About ListTile with a red background
+          Container(
+            color: Colors.red.shade100, // Light red background
+            child: ListTile(
+              title: const Text('About'),
+              onTap: () {
+                Navigator.pop(context); // Close the drawer
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AboutPage()), // Navigate to AboutPage
+                );
+              },
+            ),
           ),
         ],
       ),

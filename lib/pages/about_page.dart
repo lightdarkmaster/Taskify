@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/const/const.dart';
+import 'package:todoapp/widgets/custom_drawer.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({super.key});
@@ -16,6 +17,7 @@ class _AboutPageState extends State<AboutPage> {
         title: const Text('About Us'),
         backgroundColor: headerColor,
       ),
+      drawer: const CustomDrawer(), 
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Card(
