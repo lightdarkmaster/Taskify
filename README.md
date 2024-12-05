@@ -9,7 +9,7 @@ A Flutter application designed to provide a user-friendly interface for adding t
 - **CRUD**  
   Users can Create, Read, Update and Delete.
 
-  - **Fully Offline**  
+- **Fully Offline**  
   Users can use the app offline, without the need to connect to the internet.
 
 - **Add Notes**  
