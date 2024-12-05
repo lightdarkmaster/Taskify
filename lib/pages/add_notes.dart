@@ -3,18 +3,18 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 import 'package:todoapp/const/const.dart';
 
-class AddTask extends StatefulWidget {
-  final int? taskId; // Optional parameter for task ID
+class AddNotes extends StatefulWidget {
+  final int? noteId; // Optional parameter for note ID
   final String? title; // Optional parameter for title
   final String? description; // Optional parameter for description
 
-  const AddTask({super.key, this.taskId, this.title, this.description,});
+  const AddNotes({super.key, this.noteId, this.title, this.description});
 
   @override
-  State<AddTask> createState() => _AddTaskState();
+  State<AddNotes> createState() => _AddNotesState();
 }
 
-class _AddTaskState extends State<AddTask> {
+class _AddNotesState extends State<AddNotes> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
 
@@ -22,7 +22,7 @@ class _AddTaskState extends State<AddTask> {
   void initState() {
     super.initState();
     // Pre-fill the fields if editing
-    if (widget.taskId != null) {
+    if (widget.noteId != null) {
       _titleController.text = widget.title ?? '';
       _descriptionController.text = widget.description ?? '';
     }
@@ -31,17 +31,17 @@ class _AddTaskState extends State<AddTask> {
   Future<Database> _initializeDatabase() async {
     final dbPath = await getDatabasesPath();
     return openDatabase(
-      path.join(dbPath, 'tasks.db'),
+      path.join(dbPath, 'notes.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE tasks(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT)',
+          'CREATE TABLE notes(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT)',
         );
       },
       version: 1,
     );
   }
 
-  Future<void> _saveTask() async {
+  Future<void> _saveNotes() async {
     final title = _titleController.text.trim();
     final description = _descriptionController.text.trim();
 
@@ -54,10 +54,10 @@ class _AddTaskState extends State<AddTask> {
 
     final db = await _initializeDatabase();
 
-    if (widget.taskId == null) {
-      // Save new task
+    if (widget.noteId == null) {
+      // Save new note
       await db.insert(
-        'tasks',
+        'notes',
         {
           'title': title,
           'description': description,
@@ -65,21 +65,21 @@ class _AddTaskState extends State<AddTask> {
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Task saved successfully!')),
+        const SnackBar(content: Text('Note saved successfully!')),
       );
     } else {
-      // Update existing task
+      // Update existing note
       await db.update(
-        'tasks',
+        'notes',
         {
           'title': title,
           'description': description,
         },
         where: 'id = ?',
-        whereArgs: [widget.taskId],
+        whereArgs: [widget.noteId],
       );
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Task updated successfully!')),
+        const SnackBar(content: Text('Note updated successfully!')),
       );
     }
 
@@ -95,7 +95,7 @@ class _AddTaskState extends State<AddTask> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.taskId != null ? 'Edit Task' : 'Add Task'),
+        title: Text(widget.noteId != null ? 'Edit Note' : 'Add Note'),
         backgroundColor: headerColor,
         actions: [
           IconButton(
@@ -111,7 +111,7 @@ class _AddTaskState extends State<AddTask> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Task Title',
+              'Note Title',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
@@ -119,7 +119,7 @@ class _AddTaskState extends State<AddTask> {
               controller: _titleController,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Enter task title',
+                hintText: 'Enter note title',
               ),
             ),
             const SizedBox(height: 16),
@@ -133,17 +133,17 @@ class _AddTaskState extends State<AddTask> {
               maxLines: 4,
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
-                hintText: 'Enter task description',
+                hintText: 'Enter note description',
               ),
             ),
             const SizedBox(height: 24),
             Center(
               child: ElevatedButton(
-                onPressed: _saveTask,
+                onPressed: _saveNotes,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: headerColor,
                 ),
-                child: Text(widget.taskId != null ? 'Update' : 'Save'),
+                child: Text(widget.noteId != null ? 'Update' : 'Save'),
               ),
             ),
           ],
