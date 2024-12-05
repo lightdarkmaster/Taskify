@@ -83,7 +83,7 @@ class _NoteScreenState extends State<NoteScreen> {
       context,
       MaterialPageRoute(
         builder: (context) =>
-            const AddNotes(noteId: null, title: null, description: null,),
+            const AddNotes(noteId: null, title: null, description: null),
       ),
     );
     _fetchNotes(); // Refresh the task list after returning
@@ -105,24 +105,24 @@ class _NoteScreenState extends State<NoteScreen> {
             tooltip: 'Delete All Notes',
             onPressed: () async {
               final confirm = await showDialog<bool>(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: const Text('Confirm Delete'),
-                      content: const Text(
-                          'Are you sure you want to delete all notes?'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, false),
-                          child: const Text('Cancel'),
-                        ),
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, true),
-                          child: const Text('Delete'),
-                        ),
-                      ],
-                    );
-                  });
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('Confirm Delete'),
+                    content: const Text('Are you sure you want to delete all notes?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: const Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        child: const Text('Delete'),
+                      ),
+                    ],
+                  );
+                },
+              );
 
               if (confirm == true) {
                 await _deleteAllNotes();
@@ -132,63 +132,70 @@ class _NoteScreenState extends State<NoteScreen> {
         ],
       ),
       drawer: const CustomDrawer(), // Use the custom drawer widget here
-      body: _notes.isEmpty
-          ? const Center(
-              child: Text(
-                'No notes available. Add some notes!',
-                style: TextStyle(fontSize: 16),
-              ),
-            )
-          : ListView.builder(
-              itemCount: _notes.length,
-              itemBuilder: (context, index) {
-                final note = _notes[index];
-                final color = differentColors[index % differentColors.length];
-                return Card(
-                  elevation: 5,
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  color: color,
-                  child: ListTile(
-                    leading: const CircleAvatar(
-                      radius: 25,
-                      backgroundImage: AssetImage('assets/images/icon.png'),
-                    ),
-                    title: Text(
-                      note['title'],
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18),
-                    ),
-                    subtitle: Text(note['description']),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.edit, color: Colors.blue),
-                          onPressed: () => _editNote(note),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.red),
-                          onPressed: () {
-                            _deleteNoe(note['id']);
-                          },
-                        ),
-                      ],
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => NoteDetailsPage(
-                            note: note,
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.amber.shade200, Colors.lightBlueAccent.shade200, Colors.orange.shade100],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: _notes.isEmpty
+            ? const Center(
+                child: Text(
+                  'No notes available. Add some notes!',
+                  style: TextStyle(fontSize: 16),
+                ),
+              )
+            : ListView.builder(
+                itemCount: _notes.length,
+                itemBuilder: (context, index) {
+                  final note = _notes[index];
+                  final color = differentColors[index % differentColors.length];
+                  return Card(
+                    elevation: 5,
+                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    color: color,
+                    child: ListTile(
+                      leading: const CircleAvatar(
+                        radius: 25,
+                        backgroundImage: AssetImage('assets/images/icon.png'),
+                      ),
+                      title: Text(
+                        note['title'],
+                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                      subtitle: Text(note['description']),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.edit, color: Colors.blue),
+                            onPressed: () => _editNote(note),
                           ),
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
+                          IconButton(
+                            icon: const Icon(Icons.delete, color: Colors.red),
+                            onPressed: () {
+                              _deleteNoe(note['id']);
+                            },
+                          ),
+                        ],
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NoteDetailsPage(
+                              note: note,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _navigateToAddNotes(context),
         backgroundColor: headerColor,
