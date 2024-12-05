@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/const/const.dart';
 
-class TaskDetailsPage extends StatelessWidget {
-  final Map<String, dynamic> task;
+class NoteDetailsPage extends StatelessWidget {
+  final Map<String, dynamic> note;
 
-  const TaskDetailsPage({super.key, required this.task});
+  const NoteDetailsPage({super.key, required this.note});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Task Details'),
+        title: const Text('Note Details'),
         backgroundColor: headerColor,
       ),
       body: Padding(
@@ -29,7 +29,7 @@ class TaskDetailsPage extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        task['title'],
+                        note['title'],
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 22,
@@ -64,7 +64,7 @@ class TaskDetailsPage extends StatelessWidget {
                 ), // Added Divider here
                 const SizedBox(height: 5),
                 Text(
-                  task['description'],
+                  note['description'],
                   style: const TextStyle(fontSize: 18),
                 ),
               ],

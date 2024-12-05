@@ -3,6 +3,7 @@ import 'package:path/path.dart' as path;
 import 'package:sqflite/sqflite.dart';
 import 'package:todoapp/pages/add_task.dart';
 import 'package:todoapp/const/const.dart';
+import 'package:todoapp/widgets/custom_drawer.dart';
 import 'package:todoapp/pages/task_details.dart';
 
 class Homescreen extends StatefulWidget {
@@ -82,7 +83,7 @@ class _HomescreenState extends State<Homescreen> {
       context,
       MaterialPageRoute(
         builder: (context) =>
-            const AddTask(taskId: null, title: null, description: null),
+            const AddTask(taskId: null, title: null, description: null,),
       ),
     );
     _fetchTasks(); // Refresh the task list after returning
@@ -103,26 +104,22 @@ class _HomescreenState extends State<Homescreen> {
             icon: const Icon(Icons.delete_forever, color: Colors.red),
             tooltip: 'Delete All Tasks',
             onPressed: () async {
-              final confirm = await showDialog<bool>(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: const Text('Confirm Delete'),
-                    content: const Text(
-                        'Are you sure you want to delete all tasks?'),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, false),
-                        child: const Text('Cancel'),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, true),
-                        child: const Text('Delete'),
-                      ),
-                    ],
-                  );
-                },
-              );
+              final confirm = await showDialog<bool>(context: context, builder: (context) {
+                return AlertDialog(
+                  title: const Text('Confirm Delete'),
+                  content: const Text('Are you sure you want to delete all tasks?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, false),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, true),
+                      child: const Text('Delete'),
+                    ),
+                  ],
+                );
+              });
 
               if (confirm == true) {
                 await _deleteAllTasks();
@@ -131,6 +128,7 @@ class _HomescreenState extends State<Homescreen> {
           ),
         ],
       ),
+      drawer: const CustomDrawer(), // Use the custom drawer widget here
       body: _tasks.isEmpty
           ? const Center(
               child: Text(
@@ -142,22 +140,19 @@ class _HomescreenState extends State<Homescreen> {
               itemCount: _tasks.length,
               itemBuilder: (context, index) {
                 final task = _tasks[index];
-                final color = differentColors[
-                    index % differentColors.length]; // Cycle through colors
+                final color = differentColors[index % differentColors.length];
                 return Card(
                   elevation: 5,
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  color: color, // Set background color of the Card
+                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  color: color,
                   child: ListTile(
                     leading: const CircleAvatar(
                       radius: 25,
-                      backgroundImage: AssetImage('assets/images/task.png'), // Replace with your asset path
+                      backgroundImage: AssetImage('assets/images/task.png'),
                     ),
                     title: Text(
                       task['title'],
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18),
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     subtitle: Text(task['description']),
                     trailing: Row(
