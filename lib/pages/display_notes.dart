@@ -109,7 +109,8 @@ class _NoteScreenState extends State<NoteScreen> {
                 builder: (context) {
                   return AlertDialog(
                     title: const Text('Confirm Delete'),
-                    content: const Text('Are you sure you want to delete all notes?'),
+                    content: const Text(
+                        'Are you sure you want to delete all notes?'),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context, false),
@@ -135,7 +136,11 @@ class _NoteScreenState extends State<NoteScreen> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.amber.shade200, Colors.lightBlueAccent.shade200, Colors.orange.shade100],
+            colors: [
+              Colors.amber.shade200,
+              Colors.lightBlueAccent.shade200,
+              Colors.orange.shade100
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -154,7 +159,8 @@ class _NoteScreenState extends State<NoteScreen> {
                   final color = differentColors[index % differentColors.length];
                   return Card(
                     elevation: 5,
-                    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     color: color,
                     child: ListTile(
                       leading: const CircleAvatar(
@@ -163,7 +169,8 @@ class _NoteScreenState extends State<NoteScreen> {
                       ),
                       title: Text(
                         note['title'],
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18),
                       ),
                       subtitle: Text(note['description']),
                       trailing: Row(
@@ -175,8 +182,33 @@ class _NoteScreenState extends State<NoteScreen> {
                           ),
                           IconButton(
                             icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () {
-                              _deleteNoe(note['id']);
+                            onPressed: () async {
+                              final confirm = await showDialog<bool>(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: const Text('Confirm Delete'),
+                                      content: const Text(
+                                          'Are you sure you want to delete this note?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, false),
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, true),
+                                          child: const Text('Delete'),
+                                        ),
+                                      ],
+                                    );
+                                  });
+
+                              if (confirm == true) {
+                                await _deleteNoe(
+                                    note['id']); // Proceed with deletion
+                              }
                             },
                           ),
                         ],
