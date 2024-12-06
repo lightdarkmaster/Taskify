@@ -32,14 +32,16 @@ A Flutter application designed to provide a user-friendly interface for adding t
 ## Screenshots
 
 <div style="display: flex; justify-content: center; gap: 20px;">
-   <img src="screenshots/ss1.jpg" alt="HomePage" width="200px">
-   <img src="screenshots/ss2.jpg" alt="Navigation Side Bar" width="200px">
-   <img src="screenshots/ss3.jpg" alt="Notes Screen" width="200px">
-   <img src="screenshots/ss4.jpg" alt="About App" width="200px">
-   <img src="screenshots/ss5.jpg" alt="Edit Task" width="200px">
-   <img src="screenshots/ss6.jpg" alt="Delete All" width="200px">
-   <img src="screenshots/ss7.jpg" alt="Edit Notes" width="200px">
-
+   <img src="screenshots/taskify_v1.1.0/ss1.jpg" alt="Home Screen" width="200px">
+   <img src="screenshots/taskify_v1.1.0/ss2.jpg" alt="Side Navigation Bar" width="200px">
+   <img src="screenshots/taskify_v1.1.0/ss3.jpg" alt="Notes Screen" width="200px">
+   <img src="screenshots/taskify_v1.1.0/ss4.jpg" alt="User Manual" width="200px">
+   <img src="screenshots/taskify_v1.1.0/ss5.jpg" alt="About Page" width="200px">
+   <img src="screenshots/taskify_v1.1.0/ss6.jpg" alt="About Page" width="200px">
+   <img src="screenshots/taskify_v1.1.0/ss7.jpg" alt="Delete Single Task" width="200px">
+   <img src="screenshots/taskify_v1.1.0/ss8.jpg" alt="Delete All Tasks" width="200px">
+   <img src="screenshots/taskify_v1.1.0/ss9.jpg" alt="Add Task" width="200px">
+   <img src="screenshots/taskify_v1.1.0/ss10.jpg" alt="Add Notes" width="200px">
 </div>
 
 ---
