@@ -167,7 +167,7 @@ class _AboutPageState extends State<AboutPage> {
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                       child: Text(
-                        'This app is developed by Christian Barbosa, A BSIT student from Leyte Normal University, with a mision to make an goal oriented and task management base application for the users. he came up with an idea of Taskify.',
+                        'This app is developed by Christian Barbosa, A BSIT student from Leyte Normal University, with a mission to make an goal oriented and task management base application for the users. he came up with an idea of Taskify.',
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.black,

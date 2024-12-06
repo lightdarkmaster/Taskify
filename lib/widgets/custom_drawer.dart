@@ -216,7 +216,7 @@ class CustomDrawer extends StatelessWidget {
             color: Colors.grey.shade200,
             padding: const EdgeInsets.all(16.0),
             child: const Text(
-              '© 2024 My Todo App. All Rights Reserved.',
+              '    © 2024 Taskify. All   Rights   Reserved.  ',
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 14, color: Colors.black54),
             ),
