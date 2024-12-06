@@ -32,6 +32,7 @@ A Flutter application designed to provide a user-friendly interface for adding t
 ## Screenshots
 
 <div style="display: flex; justify-content: center; gap: 20px;">
+   <img src="screenshots/taskify_v1.1.0/ss0.jpg" alt="Home Screen" width="200px">
    <img src="screenshots/taskify_v1.1.0/ss1.jpg" alt="Home Screen" width="200px">
    <img src="screenshots/taskify_v1.1.0/ss2.jpg" alt="Side Navigation Bar" width="200px">
    <img src="screenshots/taskify_v1.1.0/ss3.jpg" alt="Notes Screen" width="200px">
@@ -40,6 +41,7 @@ A Flutter application designed to provide a user-friendly interface for adding t
    <img src="screenshots/taskify_v1.1.0/ss6.jpg" alt="About Page" width="200px">
    <img src="screenshots/taskify_v1.1.0/ss7.jpg" alt="Delete Single Task" width="200px">
    <img src="screenshots/taskify_v1.1.0/ss8.jpg" alt="Delete All Tasks" width="200px">
+   <img src="screenshots/taskify_v1.1.0/ss00.jpg" alt="No More tasks" width="200px">
    <img src="screenshots/taskify_v1.1.0/ss9.jpg" alt="Add Task" width="200px">
    <img src="screenshots/taskify_v1.1.0/ss10.jpg" alt="Add Notes" width="200px">
 </div>
@@ -105,7 +107,7 @@ A Flutter application designed to provide a user-friendly interface for adding t
 
 1. Go to Project Directory
    ```bash
-   cd seedscan
+   cd todoapp
 2. Install packages and dependencies
    ```bash
    flutter pub get
