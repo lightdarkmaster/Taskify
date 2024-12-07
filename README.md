@@ -24,9 +24,6 @@ A Flutter application designed to provide a user-friendly interface for adding t
 - **User Friendly**  
   Allows users to use the app with ease.
 
-- **Information Pop-Ups**  
-  Each detection option includes an info icon that provides additional details about the task.
-
 ---
 
 ## Screenshots
