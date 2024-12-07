@@ -14,7 +14,7 @@ class _UserManualState extends State<UserManual> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('User Manual'),
+        title: const Text('User Manual', style: TextStyle(fontFamily: 'Monserat'),),
         backgroundColor: headerColor,
       ),
       drawer: const CustomDrawer(), 
@@ -88,6 +88,7 @@ class _UserManualState extends State<UserManual> {
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'Monserat',
                       ),
                     ),
                   ),
@@ -99,7 +100,8 @@ class _UserManualState extends State<UserManual> {
                       card["description"]!,
                       style: const TextStyle(
                         fontSize: 16,
-                        color: Colors.grey,
+                        color: Colors.black54,
+                        fontFamily: 'Monserat',
                       ),
                     ),
                   ),
