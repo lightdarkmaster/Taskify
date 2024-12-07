@@ -45,7 +45,7 @@ class _NoteScreenState extends State<NoteScreen> {
     });
   }
 
-  Future<void> _deleteNoe(int id) async {
+  Future<void> _deleteNote(int id) async {
     final db = await _database;
     await db.delete(
       'notes',
@@ -95,7 +95,10 @@ class _NoteScreenState extends State<NoteScreen> {
       appBar: AppBar(
         title: const Text(
           'Notes',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontFamily: 'Monserat'),
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Monserat'),
         ),
         backgroundColor: headerColor,
         elevation: 10,
@@ -108,17 +111,17 @@ class _NoteScreenState extends State<NoteScreen> {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: const Text('Confirm Delete'),
+                    title: const Text('Confirm Delete All', style: TextStyle(fontFamily: 'Monserat'),),
                     content: const Text(
-                        'Are you sure you want to delete all notes?'),
+                        'Are you sure you want to delete all notes?', style: TextStyle(fontFamily: 'Monserat'),),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context, false),
-                        child: const Text('Cancel'),
+                        child: const Text('Cancel', style: TextStyle(fontFamily: 'Monserat'),),
                       ),
                       TextButton(
                         onPressed: () => Navigator.pop(context, true),
-                        child: const Text('Delete'),
+                        child: const Text('Delete', style: TextStyle(fontFamily: 'Monserat'),),
                       ),
                     ],
                   );
@@ -162,67 +165,87 @@ class _NoteScreenState extends State<NoteScreen> {
                     margin:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     color: color,
-                    child: ListTile(
-                      leading: const CircleAvatar(
-                        radius: 25,
-                        backgroundImage: AssetImage('assets/images/icon.png'),
-                      ),
-                      title: Text(
-                        note['title'],
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18, fontFamily: 'Monserat'),
-                      ),
-                      subtitle: Text(note['description'], style: const TextStyle(fontFamily: 'Monserat')),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.edit, color: Colors.blue),
-                            onPressed: () => _editNote(note),
+                    child: Padding(
+                      padding: const EdgeInsets.all(
+                          8.0), // Add padding around ListTile for better spacing
+                      child: ListTile(
+                        isThreeLine:
+                            true, // Allows up to 3 lines for the subtitle
+                        leading: const CircleAvatar(
+                          radius: 25,
+                          backgroundImage: AssetImage('assets/images/icon.png'),
+                        ),
+                        title: Text(
+                          note['title'],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            fontFamily: 'Monserat',
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () async {
-                              final confirm = await showDialog<bool>(
+                          overflow:
+                              TextOverflow.ellipsis, // Truncates long titles
+                        ),
+                        subtitle: Text(
+                          note['description'],
+                          style: const TextStyle(fontFamily: 'Monserat'),
+                          overflow: TextOverflow
+                              .ellipsis, // Truncates long descriptions
+                          maxLines: 2, // Limit subtitle to 2 lines
+                        ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.edit, color: Colors.blue),
+                              onPressed: () => _editNote(note),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              onPressed: () async {
+                                final confirm = await showDialog<bool>(
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
-                                      title: const Text('Confirm Delete'),
+                                      title: const Text('Confirm Delete', style: TextStyle(fontFamily: 'Monserat'),),
                                       content: const Text(
-                                          'Are you sure you want to delete this note?'),
+                                        'Are you sure you want to delete this note?',
+                                        style: TextStyle(fontFamily: 'Monserat'),
+                                      ),
                                       actions: [
                                         TextButton(
                                           onPressed: () =>
                                               Navigator.pop(context, false),
-                                          child: const Text('Cancel'),
+                                          child: const Text('Cancel', style: TextStyle(fontFamily: 'Monserat'),),
                                         ),
                                         TextButton(
                                           onPressed: () =>
                                               Navigator.pop(context, true),
-                                          child: const Text('Delete'),
+                                          child: const Text('Delete', style: TextStyle(fontFamily: 'Monserat'),),
                                         ),
                                       ],
                                     );
-                                  });
+                                  },
+                                );
 
-                              if (confirm == true) {
-                                await _deleteNoe(
-                                    note['id']); // Proceed with deletion
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => NoteDetailsPage(
-                              note: note,
+                                if (confirm == true) {
+                                  await _deleteNote(
+                                      note['id']); // Proceed with deletion
+                                }
+                              },
                             ),
-                          ),
-                        );
-                      },
+                          ],
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => NoteDetailsPage(
+                                note: note,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   );
                 },

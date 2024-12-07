@@ -95,7 +95,10 @@ class _HomescreenState extends State<Homescreen> {
       appBar: AppBar(
         title: const Text(
           'Todo',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontFamily: 'Monserat'),
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Monserat'),
         ),
         backgroundColor: headerColor,
         elevation: 10,
@@ -108,17 +111,22 @@ class _HomescreenState extends State<Homescreen> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      title: const Text('Confirm Delete', style: TextStyle(fontFamily: 'Monserat'),),
+                      title: const Text(
+                        'Confirm Delete All',
+                        style: TextStyle(fontFamily: 'Monserat'),
+                      ),
                       content: const Text(
-                          'Are you sure you want to delete all tasks?', style: TextStyle(fontFamily: 'Monserat'),),
+                        'Are you sure you want to delete all tasks?',
+                        style: TextStyle(fontFamily: 'Monserat'),
+                      ),
                       actions: [
                         TextButton(
                           onPressed: () => Navigator.pop(context, false),
-                          child: const Text('Cancel'),
+                          child: const Text('Cancel', style: TextStyle(fontFamily: 'Monserat'),),
                         ),
                         TextButton(
                           onPressed: () => Navigator.pop(context, true),
-                          child: const Text('Delete'),
+                          child: const Text('Delete', style: TextStyle(fontFamily: 'Monserat'),),
                         ),
                       ],
                     );
@@ -157,65 +165,77 @@ class _HomescreenState extends State<Homescreen> {
                     margin:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     color: color,
-                    child: ListTile(
-                      leading: const CircleAvatar(
-                        radius: 25,
-                        backgroundImage: AssetImage('assets/images/task.png'),
-                      ),
-                      title: Text(
-                        task['title'],
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18, fontFamily: 'Monserat'),
-                      ),
-                      subtitle: Text(task['description'], style: const TextStyle(fontFamily: 'Monserat'),),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.edit, color: Colors.blue),
-                            onPressed: () => _editTask(task),
+                    child: SizedBox(
+                      height: 90, // Adjusted height for better alignment
+                      child: ListTile(
+                        leading: const CircleAvatar(
+                          radius: 25,
+                          backgroundImage: AssetImage('assets/images/task.png'),
+                        ),
+                        title: Text(
+                          task['title'],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            fontFamily: 'Monserat',
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () async {
-                              final confirm = await showDialog<bool>(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: const Text('Confirm Delete'),
-                                      content: const Text(
-                                          'Are you sure you want to delete this task?'),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, false),
-                                          child: const Text('Cancel'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, true),
-                                          child: const Text('Delete'),
-                                        ),
-                                      ],
-                                    );
-                                  });
+                        ),
+                        subtitle: Text(
+                          task['description'],
+                          style: const TextStyle(fontFamily: 'Monserat'),
+                          maxLines: 2, // Limits the subtitle to 2 lines
+                          overflow: TextOverflow
+                              .ellipsis, // Trims overflow with an ellipsis
+                        ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.edit, color: Colors.blue),
+                              onPressed: () => _editTask(task),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              onPressed: () async {
+                                final confirm = await showDialog<bool>(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: const Text('Confirm Delete', style: TextStyle(fontFamily: 'Monserat')),
+                                        content: const Text(
+                                            'Are you sure you want to delete this task?', style: TextStyle(fontFamily: 'Monserat')),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context, false),
+                                            child: const Text('Cancel', style: TextStyle(fontFamily: 'Monserat'),),
+                                          ),
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context, true),
+                                            child: const Text('Delete', style: TextStyle(fontFamily: 'Monserat'),),
+                                          ),
+                                        ],
+                                      );
+                                    });
 
-                              if (confirm == true) {
-                                await _deleteTask(
-                                    task['id']); // Proceed with deletion
-                              }
-                            },
-                          ),
-                        ],
+                                if (confirm == true) {
+                                  await _deleteTask(
+                                      task['id']); // Proceed with deletion
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TaskDetailsPage(task: task),
+                            ),
+                          );
+                        },
                       ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TaskDetailsPage(task: task),
-                          ),
-                        );
-                      },
                     ),
                   );
                 },
