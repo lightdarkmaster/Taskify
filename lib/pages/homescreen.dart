@@ -53,6 +53,13 @@ class _HomescreenState extends State<Homescreen> {
       whereArgs: [id],
     );
     _fetchTasks(); // Refresh the task list
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+          content: Text(
+        'Tasks deleted successfully!',
+        style: TextStyle(fontFamily: 'Monserat'),
+      )),
+    );
   }
 
   Future<void> _deleteAllTasks() async {
@@ -60,7 +67,11 @@ class _HomescreenState extends State<Homescreen> {
     await db.delete('tasks'); // Delete all rows from the 'tasks' table
     _fetchTasks(); // Refresh the task list
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('All tasks deleted successfully!', style: TextStyle(fontFamily: 'Monserat'),)),
+      const SnackBar(
+          content: Text(
+        'All tasks deleted successfully!',
+        style: TextStyle(fontFamily: 'Monserat'),
+      )),
     );
   }
 
