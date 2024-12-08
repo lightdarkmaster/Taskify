@@ -60,7 +60,7 @@ class _HomescreenState extends State<Homescreen> {
     await db.delete('tasks'); // Delete all rows from the 'tasks' table
     _fetchTasks(); // Refresh the task list
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('All tasks deleted successfully!')),
+      const SnackBar(content: Text('All tasks deleted successfully!', style: TextStyle(fontFamily: 'Monserat'),)),
     );
   }
 

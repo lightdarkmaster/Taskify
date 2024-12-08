@@ -60,7 +60,7 @@ class _NoteScreenState extends State<NoteScreen> {
     await db.delete('notes'); // Delete all rows from the 'notes' table
     _fetchNotes(); // Refresh the note list
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('All notes deleted successfully!')),
+      const SnackBar(content: Text('All notes deleted successfully!', style: TextStyle(fontFamily: 'Monserat'),)),
     );
   }
 
