@@ -65,7 +65,7 @@ class _AddNotesState extends State<AddNotes> {
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Note saved successfully!')),
+        const SnackBar(content: Text('Note saved successfully!', style: TextStyle(fontFamily: 'Monserat'))),
       );
     } else {
       // Update existing note

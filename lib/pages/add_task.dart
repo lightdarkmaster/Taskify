@@ -65,7 +65,7 @@ class _AddTaskState extends State<AddTask> {
         conflictAlgorithm: ConflictAlgorithm.replace,
       );
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Task saved successfully!')),
+        const SnackBar(content: Text('Task saved successfully!', style: TextStyle(fontFamily: 'Monserat'),)),
       );
     } else {
       // Update existing task
@@ -79,7 +79,7 @@ class _AddTaskState extends State<AddTask> {
         whereArgs: [widget.taskId],
       );
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Task updated successfully!')),
+        const SnackBar(content: Text('Task updated successfully!', style: TextStyle(fontFamily: 'Monserat'),)),
       );
     }
 

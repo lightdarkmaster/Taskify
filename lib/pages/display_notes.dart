@@ -53,6 +53,13 @@ class _NoteScreenState extends State<NoteScreen> {
       whereArgs: [id],
     );
     _fetchNotes(); // Refresh the note list
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+          content: Text(
+        'Note deleted successfully!',
+        style: TextStyle(fontFamily: 'Monserat'),
+      )),
+    );
   }
 
   Future<void> _deleteAllNotes() async {
@@ -60,7 +67,11 @@ class _NoteScreenState extends State<NoteScreen> {
     await db.delete('notes'); // Delete all rows from the 'notes' table
     _fetchNotes(); // Refresh the note list
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('All notes deleted successfully!')),
+      const SnackBar(
+          content: Text(
+        'All notes deleted successfully!',
+        style: TextStyle(fontFamily: 'Monserat'),
+      )),
     );
   }
 
@@ -111,17 +122,28 @@ class _NoteScreenState extends State<NoteScreen> {
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: const Text('Confirm Delete All', style: TextStyle(fontFamily: 'Monserat'),),
+                    title: const Text(
+                      'Confirm Delete All',
+                      style: TextStyle(fontFamily: 'Monserat'),
+                    ),
                     content: const Text(
-                        'Are you sure you want to delete all notes?', style: TextStyle(fontFamily: 'Monserat'),),
+                      'Are you sure you want to delete all notes?',
+                      style: TextStyle(fontFamily: 'Monserat'),
+                    ),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context, false),
-                        child: const Text('Cancel', style: TextStyle(fontFamily: 'Monserat'),),
+                        child: const Text(
+                          'Cancel',
+                          style: TextStyle(fontFamily: 'Monserat'),
+                        ),
                       ),
                       TextButton(
                         onPressed: () => Navigator.pop(context, true),
-                        child: const Text('Delete', style: TextStyle(fontFamily: 'Monserat'),),
+                        child: const Text(
+                          'Delete',
+                          style: TextStyle(fontFamily: 'Monserat'),
+                        ),
                       ),
                     ],
                   );
@@ -192,74 +214,84 @@ class _NoteScreenState extends State<NoteScreen> {
                               .ellipsis, // Truncates long descriptions
                           maxLines: 2, // Limit subtitle to 2 lines
                         ),
-trailing: Row(
-  mainAxisSize: MainAxisSize.min,
-  children: [
-    Material(
-      shape: const CircleBorder(),
-      color: Colors.blue,
-      elevation: 4,
-      child: SizedBox(
-        width: 35, // Adjust button size
-        height: 35,
-        child: IconButton(
-          icon: const Icon(Icons.edit, color: Colors.white, size: 20),
-          onPressed: () => _editNote(note),
-        ),
-      ),
-    ),
-    const SizedBox(width: 20), // Add spacing between buttons
-    Material(
-      shape: const CircleBorder(),
-      color: Colors.red,
-      elevation: 4,
-      child: SizedBox(
-        width: 35, // Adjust button size
-        height: 35,
-        child: IconButton(
-          icon: const Icon(Icons.delete, color: Colors.white, size: 20),
-          onPressed: () async {
-            final confirm = await showDialog<bool>(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Text(
-                    'Confirm Delete',
-                    style: TextStyle(fontFamily: 'Monserat'),
-                  ),
-                  content: const Text(
-                    'Are you sure you want to delete this note?',
-                    style: TextStyle(fontFamily: 'Monserat'),
-                  ),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, false),
-                      child: const Text(
-                        'Cancel',
-                        style: TextStyle(fontFamily: 'Monserat'),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.pop(context, true),
-                      child: const Text(
-                        'Delete',
-                        style: TextStyle(fontFamily: 'Monserat'),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            );
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Material(
+                              shape: const CircleBorder(),
+                              color: Colors.blue,
+                              elevation: 4,
+                              child: SizedBox(
+                                width: 35, // Adjust button size
+                                height: 35,
+                                child: IconButton(
+                                  icon: const Icon(Icons.edit,
+                                      color: Colors.white, size: 20),
+                                  onPressed: () => _editNote(note),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                                width: 20), // Add spacing between buttons
+                            Material(
+                              shape: const CircleBorder(),
+                              color: Colors.red,
+                              elevation: 4,
+                              child: SizedBox(
+                                width: 35, // Adjust button size
+                                height: 35,
+                                child: IconButton(
+                                  icon: const Icon(Icons.delete,
+                                      color: Colors.white, size: 20),
+                                  onPressed: () async {
+                                    final confirm = await showDialog<bool>(
+                                      context: context,
+                                      builder: (context) {
+                                        return AlertDialog(
+                                          title: const Text(
+                                            'Confirm Delete',
+                                            style: TextStyle(
+                                                fontFamily: 'Monserat'),
+                                          ),
+                                          content: const Text(
+                                            'Are you sure you want to delete this note?',
+                                            style: TextStyle(
+                                                fontFamily: 'Monserat'),
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, false),
+                                              child: const Text(
+                                                'Cancel',
+                                                style: TextStyle(
+                                                    fontFamily: 'Monserat'),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, true),
+                                              child: const Text(
+                                                'Delete',
+                                                style: TextStyle(
+                                                    fontFamily: 'Monserat'),
+                                              ),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
 
-            if (confirm == true) {
-              await _deleteNote(note['id']); // Proceed with deletion
-            }
-          },
-        ),
-      ),
-    ),
-  ],
-),
+                                    if (confirm == true) {
+                                      await _deleteNote(
+                                          note['id']); // Proceed with deletion
+                                    }
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
 
                         onTap: () {
                           Navigator.push(
