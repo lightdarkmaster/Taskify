@@ -1,4 +1,4 @@
-# Todotask
+# Taskify
 
 A Flutter application designed to provide a user-friendly interface for adding tasks notes and saving it offline.
 
@@ -113,7 +113,6 @@ A Flutter application designed to provide a user-friendly interface for adding t
    flutter run
 
 ## Building the app
-1. to reduce app size follow the command below.
 
 1. Build apk for all platform single command:
     ```bash
