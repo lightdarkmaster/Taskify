@@ -104,7 +104,7 @@ A Flutter application designed to provide a user-friendly interface for adding t
 
 1. Go to Project Directory
    ```bash
-   cd todoapp
+   cd taskify
 2. Install packages and dependencies
    ```bash
    flutter pub get
