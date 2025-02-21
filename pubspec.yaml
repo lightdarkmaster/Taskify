@@ -38,6 +38,7 @@ dependencies:
   flutter_launcher_icons: ^0.14.1
   sqflite: ^2.3.3+1
   path: ^1.9.0
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
