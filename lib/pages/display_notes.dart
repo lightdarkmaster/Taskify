@@ -5,6 +5,7 @@ import 'package:todoapp/pages/add_notes.dart';
 import 'package:todoapp/const/const.dart';
 import 'package:todoapp/pages/note_details.dart';
 import 'package:todoapp/widgets/custom_drawer.dart';
+import 'package:intl/intl.dart'; // Import intl package for date formatting
 
 class NoteScreen extends StatefulWidget {
   const NoteScreen({super.key});
@@ -30,7 +31,7 @@ class _NoteScreenState extends State<NoteScreen> {
       path.join(dbPath, 'notes.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE notes(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT)',
+          'CREATE TABLE notes(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, timestamp TEXT)',
         );
       },
       version: 1,
@@ -81,8 +82,8 @@ class _NoteScreenState extends State<NoteScreen> {
       MaterialPageRoute(
         builder: (context) => AddNotes(
           noteId: note['id'],
-          title: note['title'],
-          description: note['description'],
+          title: note['title'] ?? '',
+          description: note['description'] ?? '',
         ),
       ),
     );
@@ -94,7 +95,7 @@ class _NoteScreenState extends State<NoteScreen> {
       context,
       MaterialPageRoute(
         builder: (context) =>
-            const AddNotes(noteId: null, title: null, description: null),
+            const AddNotes(noteId: null, title: '', description: ''),
       ),
     );
     _fetchNotes(); // Refresh the task list after returning
@@ -182,6 +183,9 @@ class _NoteScreenState extends State<NoteScreen> {
                 itemBuilder: (context, index) {
                   final note = _notes[index];
                   final color = differentColors[index % differentColors.length];
+                  final formattedTimestamp = DateFormat('yyyy-MM-dd – kk:mm')
+                      .format(DateTime.parse(
+                          note['timestamp'] ?? DateTime.now().toString()));
                   return Card(
                     elevation: 5,
                     margin:
@@ -198,7 +202,7 @@ class _NoteScreenState extends State<NoteScreen> {
                           backgroundImage: AssetImage('assets/images/icon.png'),
                         ),
                         title: Text(
-                          note['title'],
+                          note['title'] ?? '',
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -207,12 +211,26 @@ class _NoteScreenState extends State<NoteScreen> {
                           overflow:
                               TextOverflow.ellipsis, // Truncates long titles
                         ),
-                        subtitle: Text(
-                          note['description'],
-                          style: const TextStyle(fontFamily: 'Monserat'),
-                          overflow: TextOverflow
-                              .ellipsis, // Truncates long descriptions
-                          maxLines: 2, // Limit subtitle to 2 lines
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              note['description'] ?? '',
+                              style: const TextStyle(fontFamily: 'Monserat'),
+                              overflow: TextOverflow
+                                  .ellipsis, // Truncates long descriptions
+                              maxLines: 2, // Limit subtitle to 2 lines
+                            ),
+                            const SizedBox(height: 5),
+                            Text(
+                              'Saved on: $formattedTimestamp',
+                              style: const TextStyle(
+                                fontSize: 10,
+                                fontFamily: 'Monserat',
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
                         ),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -222,8 +240,8 @@ class _NoteScreenState extends State<NoteScreen> {
                               color: Colors.blue,
                               elevation: 4,
                               child: SizedBox(
-                                width: 35, // Adjust button size
-                                height: 35,
+                                width: 50, // Adjust button size
+                                height: 50,
                                 child: IconButton(
                                   icon: const Icon(Icons.edit,
                                       color: Colors.white, size: 20),
@@ -238,8 +256,8 @@ class _NoteScreenState extends State<NoteScreen> {
                               color: Colors.red,
                               elevation: 4,
                               child: SizedBox(
-                                width: 35, // Adjust button size
-                                height: 35,
+                                width: 50, // Adjust button size
+                                height: 50,
                                 child: IconButton(
                                   icon: const Icon(Icons.delete,
                                       color: Colors.white, size: 20),
@@ -292,7 +310,6 @@ class _NoteScreenState extends State<NoteScreen> {
                             ),
                           ],
                         ),
-
                         onTap: () {
                           Navigator.push(
                             context,
